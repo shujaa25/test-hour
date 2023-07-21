@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>TS Web - init</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'lib/boot/bootstrap.min.css') }}">
+  <script src="{{ url_for('static', filename = 'lib/boot/jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename = 'lib/boot/popper.min.js') }}"></script>
+  <script src="{{ url_for('static', filename = 'lib/boot/bootstrap.min.js') }}"></script>
+
+    <style>
+      .target {
+          border: solid 1px #aaa;
+          min-height: 100px;
+          width: 200px;
+          background-repeat: no-repeat;
+          background-size: 200px 100px;
+      }
+.active {
+  box-shadow: 0px 0px 10px 10px red;
+}
+
+
+    </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+(function($) {
+	var defaults;
+	$.event.fix = (function(originalFix) {
+		return function(event) {
+			event = originalFix.apply(this, arguments);
+			if (event.type.indexOf("copy") === 0 || event.type.indexOf("paste") === 0) {
+				event.clipboardData = event.originalEvent.clipboardData;
+				//alert();
+			}
+			return event;
+		};
+	})($.event.fix);
+	defaults = {
+		callback: $.noop,
+		matchType: /image.*/
+	};
+	return ($.fn.pasteImageReader = function(options) {
+		if (typeof options === "function") {
+			options = {
+				callback: options
+			};
+		}
+		options = $.extend({}, defaults, options);
+		return this.each(function() {
+			var $this, element;
+			element = this;
+			$this = $(this);
+			return $this.bind("paste", function(event) {
+				var clipboardData, found;
+				found = false;
+				clipboardData = event.clipboardData;
+				return Array.prototype.forEach.call(clipboardData.types, function(type, i) {
+					var file, reader;
+					if (found) {
+						return;
+					}
+					if (
+						type.match(options.matchType) ||
+						clipboardData.items[i].type.match(options.matchType)
+					) {
+						file = clipboardData.items[i].getAsFile();
+
+
+						reader = new FileReader();
+						reader.onload = function(evt) {
+							return options.callback.call(element, {
+								dataURL: evt.target.result,
+								event: evt,
+								file: file,
+								name: file.name
+							});
+						};
+						reader.readAsDataURL(file);
+
+						setTimeout(() => {
+						var t = document.getElementById("base64");
+						var md = document.getElementById('base64MD');
+						//md.value = `![image](${t.value})`;
+						}, 1000)
+
+						snapshoot();
+						return (found = true);
+					}
+				});
+			});
+		});
+	});
+})(jQuery);
+
+var dataURL, filename;
+$("html").pasteImageReader(function(results) {
+	filename = results.filename, dataURL = results.dataURL;
+	$data.text(dataURL);
+	$size.val(results.file.size);
+	$type.val(results.file.type);
+	var img = document.createElement("img");
+	img.src = dataURL;
+
+
+
+	var w = img.width;
+	var h = img.height;
+	$width.val(w);
+	$height.val(h);
+	return $(".active")
+		.css({
+
+			backgroundImage: "url(" + dataURL + ")"
+		})
+		.data({ width: w, height: h });
+});
+
+var $data, $size, $type, $width, $height;
+$(function() {
+	$data = $(".data");
+	$size = $(".size");
+	$type = $(".type");
+	$width = $("#width");
+	$height = $("#height");
+	$(".target").on("click", function() {
+		var $this = $(this);
+		var bi = $this.css("background-image");
+
+        var id = this.id;
+        id = id.replace('t', 's');
+        var txt = document.getElementById(id);
+        txt.style.display = 'inline';
+        if(dataURL != null){
+
+            id = id.replace('s', 'a');
+            document.getElementById(id).value = dataURL;
+            dataURL = null;
+
+
+            txt.style.color = 'green';
+            txt.innerHTML = 'Saved!';
+        }
+
+
+		$(".active").removeClass("active");
+		$this.addClass("active");
+
+		$this.toggleClass("contain");
+
+		$width.val($this.data("width"));
+		$height.val($this.data("height"));
+
+	});
+});
+
+  </script>
+
+</head>
+<body>
+<div class="container-fluid">
+<form method="post" action="/img_data">
+
+  <table class="table table-hover table-sm" style="text-align:center; margin-bottom:4%;">
+    <thead>
+      <tr class="thead-dark">
+        <th></th>
+        <th>Q. No.</th>
+        <th>Question Image</th>
+        <th>Option Image 1</th>
+        <th>Option Image 2</th>
+        <th>Option Image 3</th>
+        <th>Option Image 4</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      {% for i in range(1, q) %}
+
+            <tr>
+                <td><input type="checkbox" name="c{{i}}"></td>
+                <td>{{i}}</td>
+                <td><div class="target" id="t{{i}}"></div></td>
+                <td><div class="target" id="t{{i}}_1"></div></td>
+                <td><div class="target" id="t{{i}}_2"></div></td>
+                <td><div class="target" id="t{{i}}_3"></div></td>
+                <td><div class="target" id="t{{i}}_4"></div></td>
+
+            </tr>
+
+            <tr>
+                <td></td>
+                <td></td>
+                <td><input type="text" name="a_{{i}}" id="a{{i}}" hidden/>
+                    <span id="s{{i}}" style="color: red; display:none;">Not Saved!</span></td>
+                <td><input type="text" name="a_{{i}}_1" id="a{{i}}_1" hidden/>
+                    <span id="s{{i}}_1" style="color: red; display:none;">Not Saved!</span></td>
+                <td><input type="text" name="a_{{i}}_2" id="a{{i}}_2" hidden/>
+                    <span id="s{{i}}_2" style="color: red; display:none;">Not Saved!</span></td>
+                <td><input type="text" name="a_{{i}}_3" id="a{{i}}_3" hidden/>
+                    <span id="s{{i}}_3" style="color: red; display:none;">Not Saved!</span></td>
+               <td><input type="text" name="a_{{i}}_4" id="a{{i}}_4" hidden/>
+                    <span id="s{{i}}_4" style="color: red; display:none;">Not Saved!</span></td>
+            </tr>
+
+	    {% endfor %}
+
+    </tbody>
+  </table>
+<input class="btn btn-primary m-1 fixed-bottom w-100" type="submit" value="Continue">
+</form>
+</div>
+
+</body>
+</html>

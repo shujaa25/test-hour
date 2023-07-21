@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>TS Web - Paper</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'lib/boot/bootstrap.min.css') }}">
+  <script src="{{ url_for('static', filename = 'lib/boot/jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename = 'lib/boot/popper.min.js') }}"></script>
+  <script src="{{ url_for('static', filename = 'lib/boot/bootstrap.min.js') }}"></script>
+</head>
+<body>
+  <form method="post" action="/test" class="m-5">
+  <h2>Paper:</h2>
+    <center>
+      <textarea cols="150" rows="20" name="paper" required></textarea>
+      <br>
+      <input type="submit" class="btn btn-success m-1 fixed-bottom w-100" value="Next">
+    </center>
+
+  </form>
+</body>
+</html>

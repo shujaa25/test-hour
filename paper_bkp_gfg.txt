@@ -1,0 +1,286 @@
+Question: 1
+Suppose that in a C program snippet, followings statements are used.
+code
+i) sizeof(int);
+ii) sizeof(int*);
+iii) sizeof(int**);
+
+Assuming size of pointer is 4 bytes and size of int is also 4 bytes, pick the most correct answer from the given options.
+1.
+Only i) would compile successfully and it would return size as 4.
+2.
+i), ii) and iii) would compile successfully and size of each would be same i.e. 4
+3.
+i), ii) and iii) would compile successfully but the size of each would be different and would be decided at run time.
+4.
+ii) and iii) would result in compile error but i) would compile and result in size as 4.
+Not Attempt Correct Answer : Option2
+Max Marks :  1.00 Marks Scored :   Time Taken :  -
+C Pointer Basics    C Quiz - 101
+
+
+Question: 2
+Assume int is 4 bytes, char is 1 byte and float is 4 bytes. Also, assume that pointer size is 4 bytes (i.e. typical case)
+code
+char *pChar;
+int *pInt;
+float *pFloat;
+
+sizeof(pChar);
+sizeof(pInt);
+sizeof(pFloat);
+
+What’s the size returned for each of sizeof() operator?
+1.
+4 4 4
+2.
+1 4 4
+3.
+1 4 8
+4.
+None of the above
+Not Attempt Correct Answer : Option1
+Max Marks :  1.00 Marks Scored :   Time Taken :  -
+C Pointer Basics    C Quiz - 101
+Discuss it
+
+
+Question: 3
+code
+#include "stdlib.h"
+int main()
+{
+ int *pInt;
+ int **ppInt1;
+ int **ppInt2;
+
+ pInt = (int*)malloc(sizeof(int));
+ ppInt1 = (int**)malloc(10*sizeof(int*));
+ ppInt2 = (int**)malloc(10*sizeof(int*));
+
+ free(pInt);
+ free(ppInt1);
+ free(*ppInt2);
+ return 0;
+}
+
+Choose the correct statement w.r.t. above C program.
+1.
+malloc() for ppInt1 and ppInt2 isn’t correct. It’ll give compile time error.
+2.
+free(*ppInt2) is not correct. It’ll give compile time error.
+3.
+free(*ppInt2) is not correct. It’ll give run time error.
+4.
+No issue with any of the malloc() and free() i.e. no compile/run time error.
+Not Attempt Correct Answer : Option4
+Max Marks :  1.00 Marks Scored :   Time Taken :  -
+C Advanced Pointer    C Quiz - 101
+Discuss it
+
+
+Question: 4
+code
+#include "stdio.h"
+int main()
+{
+ void *pVoid;
+ pVoid = (void*)0;
+ printf("%lu",sizeof(pVoid));
+ return 0;
+}
+
+Pick the best statement for the above C program snippet.
+1.
+Assigning (void *)0 to pVoid isn’t correct because memory hasn’t been allocated. That’s why no compile error but it'll result in run time error.
+2.
+Assigning (void *)0 to pVoid isn’t correct because a hard coded value (here zero i.e. 0) can’t assigned to any pointer. That’s why it'll result in compile error.
+3.
+No compile issue and no run time issue. And the size of the void pointer i.e. pVoid would equal to size of int.
+4.
+sizeof() operator isn’t defined for a pointer of void type.
+Not Attempt Correct Answer : Option3
+Max Marks :  1.00 Marks Scored :   Time Taken :  -
+C Advanced Pointer    C Quiz - 101
+Discuss it
+
+
+Question: 5
+Consider the following variable declarations and definitions in C
+code
+i) int var_9 = 1;
+ii) int 9_var = 2;
+iii) int _ = 3;
+
+Choose the correct statement w.r.t. above variables.
+1.
+Both i) and iii) are valid.
+2.
+Only i) is valid.
+3.
+Both i) and ii) are valid.
+4.
+All are valid.
+Not Attempt Correct Answer : Option1
+Max Marks :  2.00 Marks Scored :   Time Taken :  -
+C Variable Declaration and Scope    C Quiz - 101
+Discuss it
+
+
+Question: 6
+code
+Let x be an integer which can take a value of 0 or 1. The statement if(x = =0) x = 1; else x = 0; is equivalent to which one of the following?
+1.
+x = 1 + x;
+2.
+x = 1 - x;
+3.
+x = x - 1;
+4.
+x = 1 % x;
+Not Attempt Correct Answer : Option2
+Max Marks :  2.00 Marks Scored :   Time Taken :  -
+C Quiz - 101    GATE-IT-2004
+Discuss it
+
+
+Question: 7
+A program attempts to generate as many permutations as possible of the string, 'abcd' by pushing the characters a, b, c, d in the same order onto a stack, but it may pop off the top character at any time. Which one of the following strings CANNOT be generated using this program?
+1.
+abcd
+2.
+dcba
+3.
+cbad
+4.
+cabd
+Not Attempt Correct Answer : Option4
+Max Marks :  2.00 Marks Scored :   Time Taken :  -
+C Quiz - 101    GATE-IT-2004
+Discuss it
+
+
+Question: 8
+Consider following two C - program :
+code
+P1 :
+int main()
+{
+    int (*ptr)(int ) = fun;
+    (*ptr)(3);
+    return 0;
+}
+
+int fun(int n)
+{
+  for(;n > 0; n--)
+    printf("GeeksQuiz ");
+  return 0;
+}
+
+P2 :
+int main()
+{
+    void demo();
+    void (*fun)();
+    fun = demo;
+    (*fun)();
+    fun();
+    return 0;
+}
+
+void demo()
+{
+    printf("GeeksQuiz ");
+}
+
+Which of the following option is correct?
+1.
+P1 printed "GeeksQuiz GeeksQuiz" and P2 printed "GeeksQuiz GeeksQuiz"
+2.
+P1 printed "GeeksQuiz GeeksQuiz" and P2 gives compiler error
+3.
+P1 gives compiler error and P2 printed "GeeksQuiz GeeksQuiz"
+4.
+None of the above
+Not Attempt Correct Answer : Option3
+Max Marks :  2.00 Marks Scored :   Time Taken :  -
+C Quiz - 101    GATE CS Mock 2018
+Discuss it
+
+
+Question: 9
+Choose the best statement with respect to following three program snippets.
+code
+/*Program Snippet 1 with for loop*/
+for (i = 0; i < 10; i++)
+{
+   /*statement1*/
+   continue;
+   /*statement2*/
+}
+
+/*Program Snippet 2 with while loop*/
+i = 0;
+while (i < 10)
+{
+   /*statement1*/
+   continue;
+   /*statement2*/
+   i++;
+}
+
+/*Program Snippet 3 with do-while loop*/
+i = 0;
+do
+{
+   /*statement1*/
+   continue;
+   /*statement2*/
+   i++;
+}while (i < 10);
+1.
+All the loops are equivalent i.e. any of the three can be chosen and they all will perform exactly same.
+2.
+continue can't be used with all the three loops in C.
+3.
+After hitting the continue; statement in all the loops, the next expression to be executed would be controlling expression (i.e. i < 10) in all the 3 loops.
+4.
+None of the above is correct.
+Not Attempt Correct Answer : Option4
+Max Marks :  2.00 Marks Scored :   Time Taken :  -
+C Quiz - 101    GATE CS Mock 2018
+Discuss it
+Question: 10
+Consider the following Binary Search Tree
+If we randomly search one of the keys present in above BST, what would be the expected number of comparisons?
+1.
+2.75
+2.
+2.25
+3.
+2.57
+4.
+3.25
+Not Attempt Correct Answer : Option3
+Max Marks :  2.00 Marks Scored :   Time Taken :  -
+Max Marks :  2.00 Marks Scored :   Time Taken :  -
+
+Question: 11
+Consider the following operation along with Enqueue and Dequeue operations on queues, where k is a global parameter.
+code
+MultiDequeue(Q){
+   m = k
+   while (Q is not empty and m  > 0) {
+      Dequeue(Q)
+      m = m - 1
+   }
+}
+What is the worst case time complexity of a sequence of n MultiDequeue() operations on an initially empty queue? (GATE CS 2013)
+1.
+2.
+3.
+4.
+Not Attempt Correct Answer : Option1
+Max Marks :  2.00 Marks Scored :   Time Taken :  -
+Report

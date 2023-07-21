@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>TS Web</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'lib/boot/bootstrap.min.css') }}">
+  <script src="{{ url_for('static', filename = 'lib/boot/jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename = 'lib/boot/popper.min.js') }}"></script>
+  <script src="{{ url_for('static', filename = 'lib/boot/bootstrap.min.js') }}"></script>
+
+
+</head>
+<body>
+
+    <div>
+
+    <table class="table table-bordered table-sm" style="text-align:center;">
+    <thead>
+      <tr>
+        <th>No.</th>
+        <th>Question</th>
+        <th>Your Answer</th>
+        <th>Correct Answer</th>
+        <th>Marks</th>
+        <th>Time Taken</th>
+        <th>View</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for i in res %}
+            {% if i[1] == True %}
+                <tr bgcolor="#006600" style="color: #fff;">
+            {% else %}
+                <tr bgcolor="#cc3300" style="color: #fff;">
+            {% endif %}
+
+                <td>{{i[0]}}</td>
+                <td style="text-align:left;">{{data[i[0]].split('\n')[1][:80]}}...</td>
+                <td>{{ans[i[0]]}}</td>
+                <td>{{ans2[i[0]][0]}}</td>
+                <td>{{m[i[0]]}}</td>
+                <td>{{time[i[0]]}}</td>
+                <td>
+                    <button data-toggle="collapse" class="btn btn-sm btn-light"
+                            data-target="#cont{{i[0]}}">View</button>
+                </td>
+
+            </tr>
+        <tr id="cont{{i[0]}}" class="collapse">
+            <td></td>
+            <td colspan="5">
+                <textarea cols="180" rows="10">{{data[i[0]][12:]}}</textarea>
+            </td>
+
+        </tr>
+	    {% endfor %}
+    </tbody>
+  </table>
+</div>
+    <h1 style="text-align:center;">
+
+        {{per}}%
+
+    </h1>
+</body>
+</html>
